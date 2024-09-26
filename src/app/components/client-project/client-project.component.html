@@ -1,0 +1,130 @@
+<app-alert></app-alert>
+<div class="row pt-2">
+    <div class="col-8">
+        <div class="card">
+            <div class="class-header bg-success text-white text-center p-2 fw-bolder">
+                Project List
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Sr No</th>
+                            <th>Project Name</th>
+                            <th>Client Name</th>
+                            <th>Lead By</th>
+                            <th>Start Date</th>
+                            <th>Expected End Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (item of projectlist; track $index) {
+                        <tr>
+                            <td>{{$index+1}}</td>
+                            <td>{{item.projectName | uppercase}}</td>
+                            <td>{{item.clientName | uppercase}}</td>
+                            <td>{{item.empName}}</td>
+                            <td>{{item.startDate | date:'dd-MMM-yyyy'}}</td>
+                            <td>{{item.expectedEndDate | date:'dd-MMM-yyyy'}}</td>
+                            <td>
+                                <button class="btn btn-secondary mx-1">Edit</button>
+                                <button class="btn btn-danger mx-1">Delete</button>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="card">
+            <div class="class-header bg-success text-white text-center p-2 fw-bolder">
+                New Project
+            </div>
+            <form [formGroup]="projectForm">
+                <div class="row p-3">
+                    <div class="col-6">
+                        <label for="">Project Name</label>
+                        <input type="text" class="form-control" formControlName="projectName" name="projectName">
+                        @if(projectForm.controls ['projectName'].touched){
+                        <div class="text-danger">
+                            @if (projectForm.controls['projectName'].errors?.['minlength']) {
+                            <span>Min 4 Char</span>
+                            }
+                            @if (projectForm.controls['projectName'].errors?.['required']) {
+                            <span>This is Required</span>
+                            }
+                        </div>
+                        }
+                    </div>
+                    <div class="col-6">
+                        <label for="">Start Date</label>
+                        <input type="date" class="form-control" formControlName="startDate" name="startDate">
+                    </div>
+                    <div class="col-6">
+                        <label for="">Expected End Date</label>
+                        <input type="date" class="form-control" formControlName="expectedEndDate"
+                            name="expectedEndDate">
+                    </div>
+                    <div class="col-6">
+                        <label for="">Contact Person</label>
+                        <input type="text" class="form-control" formControlName="contactPerson" name="contactPerson">
+                    </div>
+                    <div class="col-6">
+                        <label for="">Contact Person No</label>
+                        <input type="text" class="form-control" formControlName="contactPersonContactNo"
+                            name="contactPersonContactNo">
+                    </div>
+                    <div class="col-6">
+                        <label for="">Contact Person Email</label>
+                        <input type="text" class="form-control" formControlName="contactPersonEmailId"
+                            name="contactPersonContactEmailID">
+                    </div>
+                    <div class="col-6">
+                        <label for="">Total Emp. Count</label>
+                        <input type="text" class="form-control" formControlName="totalEmpWorking"
+                            name="totalEmpWorking">
+                    </div>
+                    <div class="col-6">
+                        <label for="">Project Costing</label>
+                        <input type="text" class="form-control" formControlName="projectCost" name="projectCost">
+                    </div>
+                    <div class="col-12">
+                        <label for="">Project Description</label>
+                        <textarea class="form-control" formControlName="projectDetails"
+                            name="projectDetails"></textarea>
+                    </div>
+                    <div class="col-6">
+                        <label for="">Select Client</label>
+                        <select class="form-control" formControlName="clientId">
+                            <option value="">Select Client</option>
+                            @for (item of clientlist; track $index) {
+                            <option [value]="item.clientId">{{item.companyName}}</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-6">
+                        <label for="">Lead By</label>
+                        <select class="form-control" formControlName="leadByEmpId">
+                            <option value="">Select Employee</option>
+                            @for (item of employeeList; track $index) {
+                            <option [value]="item.empId">{{item.empName}}-{{item.empCode}}</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="row p-2 ">
+                    <div class="col-6 d-flex justify-content-center">
+                        <button class="btn btn-secondary">Reset</button>
+                    </div>
+                    <div class="col-6 d-flex justify-content-center">
+                        <button class="btn btn-success" [disabled]="projectForm.invalid" (click)=onSaveProject()>Save</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

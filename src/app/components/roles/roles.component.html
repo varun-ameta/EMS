@@ -1,0 +1,22 @@
+<div class="row d-flex justify-content-center">
+    @if(isLoader){
+    <div class="spinner-border" role="status"></div>
+    } @else {
+    <div class="col-6">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>S.No</th>
+                    <th>Role Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let role of roleList">
+                    <td>{{role.roleId}}</td>
+                    <td>{{role.role}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    }
+</div>
